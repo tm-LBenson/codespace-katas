@@ -24,7 +24,6 @@ export default function josephusSurvivor(n, k) {
         const newNode = new Node(value);
         let currentNode = this.head;
         while (currentNode.next !== null) {
-          console.log('hey');
           currentNode = currentNode.next;
         }
         currentNode.next = newNode;
@@ -48,17 +47,22 @@ export default function josephusSurvivor(n, k) {
     }
 
     removeNode(value) {
-      let previousNode = this.head;
-      let currentNode = this.head.next;
-      console.log(currentNode.value === value, "IDK");
-      while (currentNode.value !== value) {
-        previousNode = currentNode;
-        currentNode = currentNode.next;
-      }
-      console.log('removing node');
-      console.log('BEFORE', previousNode.next);
-      previousNode.next = currentNode.next;
-      console.log('AFTER', previousNode.next);
+      let previousNode = this.activeNode;
+        let currentNode = this.activeNode.next;
+        if (currentNode.value !== value) {
+
+            while (currentNode.value !== value) {
+                console.log("test")
+                previousNode = currentNode;
+                currentNode = currentNode.next;
+            }
+        } else {
+            console.log('removing node');
+            console.log('BEFORE', previousNode.next);
+            previousNode.next = currentNode.next;
+            console.log('AFTER', previousNode.next);
+
+        }
     }
   }
   const linkedList = new LinkedList();
