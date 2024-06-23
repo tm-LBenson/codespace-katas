@@ -1,95 +1,83 @@
 'use strict';
 
 export default function josephusSurvivor(n, k) {
-    class Node {
-        constructor(value, head) {
-            this.value = value
-            this.next = head;
+  class Node {
+    constructor(value) {
+      this.value = value;
+      this.next = null;
+    }
+  }
+
+  class LinkedList {
+    constructor() {
+      this.head = null;
+      this.length = 0;
+      this.activeNode = null;
+    }
+    add(value) {
+      if (this.head === null) {
+        const newNode = new Node(value);
+        this.head = newNode;
+        this.activeNode = this.head;
+        this.length++;
+      } else {
+        const newNode = new Node(value);
+        let currentNode = this.head;
+        while (currentNode.next !== null) {
+          console.log('hey');
+          currentNode = currentNode.next;
         }
+        currentNode.next = newNode;
+        this.length++;
+      }
+    }
+    incrementActive() {
+      if (this.length > 1) {
+        this.activeNode = this.activeNode.next;
+        console.log('Current Active node: ', this.activeNode.value);
+      }
     }
 
-
-    class LinkedList {
-        constructor() {
-            this.head = null
-            this.length = 0
-            this.activeNode = null
-        }
-        add(value) {
-            if (this.head === null) {
-                this.head = newNode
-                const newNode = new Node(value, this.head)
-                this.activeNode = this.head
-                this.length++
-            } else {
-                const newNode = new Node(value, this.head)
-                let currentNode = this.head
-                while (currentNode.next !== null) {
-                    currentNode = currentNode.next
-                }
-                currentNode.next = newNode
-                this.length++
-            }
-     
-        }
-        incrementActive(){
-            if(this.length > 1){
-                this.activeNode = this.activeNode.next
-                console.log("Current Active node: ",this.activeNode.value)
-            }
-            
-        }
-
-        wrapList() {
-
-            let currentNode = this.head
-            while (this.length > 1) {
-                console.log(currentNode)
-                currentNode = currentNode.next
-            }
-            currentNode.next = this.head
-         
-        }
-
-        removeNode(value) {
-            let previousNode = this.head
-            if(this.head.value === value){
-                console.log("GOT IT ", this.activeNode.value)
-                return this.activeNode.value
-            }
-            let currentNode = this.head.next
-            while (this.length > 1) {
-                console.log('looping')
-                if (currentNode === value) {
-
-                previousNode.next = currentNode.next.next
-                currentNode.next = this.head
-                    
-                }
-                previousNode = currentNode;
-                currentNode = currentNode.next
-                this.activeNode = currentNode
-            }
-        }
-   
+    wrapList() {
+      let currentNode = this.head;
+      while (currentNode.next !== null) {
+        console.log(currentNode);
+        currentNode = currentNode.next;
+      }
+      currentNode.next = this.head;
     }
 
-    const linkedList = new LinkedList()
-   
-    for (let i = 0; i < n; i++) {
-        linkedList.add(i + 1)
+    removeNode(value) {
+      let previousNode = this.head;
+      let currentNode = this.head.next;
+      console.log(currentNode.value === value, "IDK");
+      while (currentNode.value !== value) {
+        previousNode = currentNode;
+        currentNode = currentNode.next;
+      }
+      console.log('removing node');
+      console.log('BEFORE', previousNode.next);
+      previousNode.next = currentNode.next;
+      console.log('AFTER', previousNode.next);
     }
-    linkedList.wrapList()
-   
-    while (linkedList.length > 1) {
- 
-        for (let i = 0; i < k; i++) {
-            linkedList.incrementActive()
-            
+  }
+  const linkedList = new LinkedList();
+  let emergencyExit = 0;
+  for (let i = 0; i < n; i++) {
+    linkedList.add(i + 1);
+  }
+  linkedList.wrapList();
 
-        }
-        linkedList.removeNode(linkedList.activeNode.value)
-        
+  while (linkedList.length > 1) {
+    emergencyExit++;
+    console.log('this');
+    for (let i = 0; i < k; i++) {
+      linkedList.incrementActive();
     }
-    console.log(linkedList)
+    linkedList.removeNode(linkedList.activeNode.value);
+    if (emergencyExit > 10) {
+      return;
+    }
+  }
+  console.log(linkedList);
 }

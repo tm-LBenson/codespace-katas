@@ -11,3 +11,11 @@ a = a + b
 b = a - b
 a = a - b
 print(a,b)
+
+
+myStr = "this is my string"
+
+
+print(myStr[::-1])
+
+

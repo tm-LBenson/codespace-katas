@@ -1,8 +1,8 @@
 'use strict';
 
-import challenge1 from './challenges/calculatingWithFunctions.js'
-import challenge2 from './challenges/currying.js'
+import challenge1 from './challenges/calculatingWithFunctions.js';
+import challenge2 from './challenges/unsolved/currying.js';
+import challenge3 from './challenges/josephus.js';
 // challenge1()
 
-    console.log(challenge2(1)(4)(1)())
-    
+challenge3(5, 3);
